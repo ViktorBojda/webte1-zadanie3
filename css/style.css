@@ -1,0 +1,13 @@
+body {
+    background-color: rgb(200, 211, 220);
+    font-family: Verdana, Arial, Helvetica, sans-serif
+}
+h1 {
+    letter-spacing: 2rem;
+    font-weight: bolder;
+}
+
+.page-content {
+    background-color: white;
+    box-shadow: 10px 5px 5px gray;
+}
