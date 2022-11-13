@@ -20,6 +20,10 @@ const colChartOptions = {
     type: 'bar',
     height: 350
   },
+  title: {
+    text: 'Štatistika známok',
+    align: 'center'
+  },
   plotOptions: {
     bar: {
       horizontal: false,
@@ -49,7 +53,35 @@ const colChartOptions = {
           return val + " študentov"
       }
     }
-  }
+  },
+  responsive: [
+    {
+      breakpoint: 768,
+      options: {
+        chart: {
+          height: 650
+        },
+        plotOptions: {
+          bar: {
+            horizontal: true
+          }
+        },
+        xaxis: {
+          title: {
+            text: 'Počet študentov'
+          }
+        },
+        yaxis: {
+          title: {
+            text: ''
+          }
+        },
+        legend: {
+          position: 'right',
+        }
+      }
+    }
+  ]
 };
 
 
@@ -61,23 +93,68 @@ const pieChartOptions = {
   },
   labels: [],
   title: {
-    text: 'Počet študentov'
+    text: 'Štatistika známok',
+    align: 'center'
   },
   subtitle: {
-    text: ''
+    text: '',
+    align: 'center'
   },
-  responsive: [{
-    breakpoint: 480,
-    options: {
-      chart: {
-        width: 200
-      },
-      legend: {
-        position: 'bottom'
+  legend: {
+    position: 'bottom'
+  },
+  tooltip: {
+    y: {
+      formatter: function (val) {
+        if (val == 1)
+          return val + " študent"
+        else if (val == 2 || val == 3 || val == 4)
+          return val + " študenti"
+        else
+          return val + " študentov"
       }
     }
-  }]
+  }
 };
+
+
+const lineChartOptions = {
+  series: [{
+    name: "Študentov",
+    data: []
+  }],
+  chart: {
+    height: 350,
+    type: 'line',
+    zoom: {
+      enabled: false
+    }
+  },
+  dataLabels: {
+    enabled: false
+  },
+  stroke: {
+    curve: 'straight'
+  },
+  title: {
+    text: 'Úspešnosť absolvovania',
+    align: 'left'
+  },
+  grid: {
+    row: {
+      colors: ['#f3f3f3', 'transparent'],
+      opacity: 0.5
+    },
+  },
+  xaxis: {
+    categories: [],
+  },
+  yaxis: {
+    labels: {
+      formatter: (val) => {return val + ' %'}
+    }
+  }
+}
 
 
 function createGraphs(xmlDoc) {
@@ -89,22 +166,37 @@ function createGraphs(xmlDoc) {
     $(this).children().each(function () {
       if (this.tagName == "rok") {
         colChartOptions.xaxis.categories.unshift(this.textContent);
+
         pieChartOptions.subtitle.text = this.textContent;
         yearId = this.textContent.slice(-4);
+
+        lineChartOptions.xaxis.categories.unshift(this.textContent);
       }
 
       else if (this.tagName == "hodnotenie") {
+        let totalStudents = 0;
+        let failedStudents = 0;
+
         $(this).children().each(function () {
-          pieChartOptions.series.push(parseInt(this.textContent));
+          let currStudents = parseInt(this.textContent);
+
+          if (this.tagName == 'FX' || this.tagName == 'FN')
+            failedStudents += currStudents;
+
+          totalStudents += currStudents;
+
+          pieChartOptions.series.push(currStudents);
           pieChartOptions.labels.push(this.tagName);
 
           colChartOptions.series.find((o, i) => {
             if (o.name == this.tagName) {
-              colChartOptions.series[i].data.unshift(parseInt(this.textContent));
+              colChartOptions.series[i].data.unshift(currStudents);
               return;
             }
           })
         });
+
+        lineChartOptions.series[0].data.unshift(+(100 - (failedStudents / totalStudents * 100)).toFixed(2));
       }
     });
 
@@ -117,6 +209,9 @@ function createGraphs(xmlDoc) {
 
   let colChart = new ApexCharts(document.querySelector("#chart-col"), colChartOptions);
   colChart.render();
+
+  let lineChart = new ApexCharts(document.querySelector("#chart-line"), lineChartOptions);
+  lineChart.render();
 }
 
 
