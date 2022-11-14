@@ -14,7 +14,7 @@ a, a:hover {
 }
 
 a:hover {
-    background: gray;
+    background-color: rgb(139, 163, 214);
 }
 
 .page-content {
@@ -26,10 +26,16 @@ a:hover {
     background-color: rgb(45, 57, 83);
 }
 
+button.dark-blue-color:hover, button.dark-blue-color:active {
+    background-color: rgb(104, 135, 202) !important;
+}
+
 .nav-button-active {
     background-color: rgb(104, 135, 202);
+    font-weight: bolder;
 }
 
 a.nav-button-active:hover {
     background-color: rgb(104, 135, 202);
+    font-weight: bolder;
 }
