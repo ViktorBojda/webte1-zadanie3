@@ -37,24 +37,46 @@
             <div class="row">
                 <div id="chart-line-sinecosine" class="mt-4"></div>
             </div>
-            <div class="row">
-                <div class="col-6 mx-auto">
+
+            <div class="d-flex justify-content-center mb-1">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="y1-checkbox" value="y1-checkbox" checked>
+                    <label class="form-check-label" for="y1-checkbox">y1</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="y2-checkbox" value="y2-checkbox" checked>
+                    <label class="form-check-label" for="y2-checkbox">y2</label>
+                </div>
+            </div>
+            
+            <div class="row mb-4">
+                <div class="col-4 mx-auto">
                     <button type="button" id="closeButton" class="w-100 btn btn-lg dark-blue-color text-white">Koniec</button>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-6 mx-auto">
-                    <div id="wrapper">
-                        <input type="range" name="" id="range">
-                        <div id ="text">1</div>
-                    </div>
+
+            <div class="d-flex justify-content-center">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="slider-checkbox" value="slider-checkbox" checked>
+                    <label class="form-check-label" for="slider-checkbox">Slider</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="number-checkbox" value="number-checkbox" checked>
+                    <label class="form-check-label" for="number-checkbox">Textové pole</label>
                 </div>
             </div>
-            <!-- <div class="row">
-                <div class="col-6 mx-auto">
-                    <slider-counter></slider-counter>
+
+            <div class="row mb-1">
+                <div class="col-5 mx-auto">
+                    <slider-counter id="amplitude-slider" min-val="1" max-val="10"></slider-counter>
                 </div>
-            </div> -->
+            </div>
+
+            <div class="row">
+                <div class="col-5 mx-auto">
+                    <input type="number" name="amplitude-number" id="amplitude-number">
+                </div>
+            </div>
         </div>
     </div>
 
@@ -63,7 +85,7 @@
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" 
     integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script src="../js/slider-counter.js"></script>
-    <script src="../js/sinecosine.js"></script>
+    <script src="../js/slider-counter.js" defer></script>
+    <script src="../js/sinecosine.js" defer></script>
 </body>
 </html>

@@ -8,6 +8,12 @@ h1 {
     font-weight: bolder;
 }
 
+input[type=number] {
+    width: 100%;
+    color: white;
+    background-color: rgb(45, 57, 83);
+}
+
 a, a:hover {
     text-decoration: none;
     color: white;
@@ -39,52 +45,3 @@ a.nav-button-active:hover {
     background-color: rgb(104, 135, 202);
     font-weight: bolder;
 }
-
-#wrapper {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
-
-#range {
-    -webkit-appearance: none;
-    appearance: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    margin: auto;
-    width: 100%;
-    height: 15px;
-    background: gray;
-}
-
-#range::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 50px;
-    height: 30px;
-    background: #04AA6D;
-    cursor: pointer;
-  }
-  
-#range::-moz-range-thumb {
-    width: 50px;
-    height: 30px;
-    background: #04AA6D;
-    cursor: pointer;
-  }
-
-#text {
-    position: relative;
-    left: 0px;
-    pointer-events: none;
-    width: 50px;
-    height: 30px;
-    background-color: white;
-    text-align: center;
-    border: 1px solid black;
-    line-height: 30px;
-    border-radius: 1%;
-}
-

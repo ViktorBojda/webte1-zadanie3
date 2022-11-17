@@ -8,11 +8,11 @@ class SliderCounter extends HTMLElement {
         wrapper.setAttribute("class", "wrapper");
 
         const slider = wrapper.appendChild(document.createElement("input"));
-        slider.setAttribute("class", "input")
-        slider.setAttribute("type", "range")
+        slider.setAttribute("class", "slider");
+        slider.setAttribute("type", "range");
 
-        const output = wrapper.appendChild(document.createElement("div"));
-        output.setAttribute("class", "div");
+        const label = wrapper.appendChild(document.createElement("div"));
+        label.setAttribute("class", "label");
 
         let minimum = this.hasAttribute("min-val") ? this.getAttribute("min-val") : 1;
         let maximum = this.hasAttribute("max-val") ? this.getAttribute("max-val") : 10;
@@ -20,12 +20,71 @@ class SliderCounter extends HTMLElement {
         slider.setAttribute("min", minimum);
         slider.setAttribute("max", maximum);
         slider.setAttribute("value", minimum);
-        output.innerHTML = minimum;
+        label.innerHTML = minimum;
 
         const style = document.createElement("style");
-        style.textContent = '';
+        style.textContent = `
+            .wrapper {
+                position: relative;
+                width: 100%;
+                height: 100%;
+            }
+            
+            .slider {
+                -webkit-appearance: none;
+                appearance: none;
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                margin: auto;
+                width: 100%;
+                height: 15px;
+                background: rgb(45, 57, 83);
+            }
+            
+            .slider::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                appearance: none;
+                width: 50px;
+                height: 30px;
+                opacity: 0;
+                cursor: pointer;
+            }
+            
+            .slider::-moz-range-thumb {
+                width: 50px;
+                height: 30px;
+                opacity: 0;
+                cursor: pointer;
+            }
+            
+            .label {
+                position: relative;
+                left: 0px;
+                pointer-events: none;
+                width: 50px;
+                height: 30px;
+                color: white;
+                background-color: rgb(104, 135, 202);
+                text-align: center;
+                font-weight: bolder;
+                line-height: 30px;
+                border-radius: 10%;
+            }
+        `;
 
-        this.shadowRoot.append(wrapper);
+        this.shadowRoot.append(style, wrapper);
+
+        let thumbWidth = 50;
+        let offset = (slider.clientWidth - thumbWidth) / (maximum - minimum);
+
+        this.shadowRoot.querySelector(".slider").addEventListener('input', function() {
+            let px = ((slider.valueAsNumber - minimum) * offset) - (label.clientWidth / 2) + (thumbWidth / 2);
+            label.innerHTML = slider.value;
+            label.style.left = px + 'px';
+        });
+        
 
         // this.clickEventFunc = (event) => {
         //     const customEvent = new CustomEvent('btn-click', {
@@ -48,6 +107,10 @@ class SliderCounter extends HTMLElement {
         // }
 
         // this.shadowRoot.querySelector(".input").addEventListener("change", this.inputUpdateFunc);
+    }
+
+    customMethod() {
+        console.log("customMethod");
     }
 }
 
