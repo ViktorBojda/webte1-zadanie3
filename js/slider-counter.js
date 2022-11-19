@@ -79,38 +79,29 @@ class SliderCounter extends HTMLElement {
         let thumbWidth = 50;
         let offset = (slider.clientWidth - thumbWidth) / (maximum - minimum);
 
-        this.shadowRoot.querySelector(".slider").addEventListener('input', function() {
+        window.addEventListener('resize', function() {
+            offset = (slider.clientWidth - thumbWidth) / (maximum - minimum);
+            let px = ((slider.valueAsNumber - minimum) * offset) - (label.clientWidth / 2) + (thumbWidth / 2);
+            label.style.left = px + 'px';
+        });
+
+        this.shadowRoot.addEventListener('input', function() {
             let px = ((slider.valueAsNumber - minimum) * offset) - (label.clientWidth / 2) + (thumbWidth / 2);
             label.innerHTML = slider.value;
             label.style.left = px + 'px';
         });
-        
-
-        // this.clickEventFunc = (event) => {
-        //     const customEvent = new CustomEvent('btn-click', {
-        //         bubbles: true,
-        //         composed: true,
-        //     });
-        //     this.dispatchEvent(customEvent);
-        // }
-
-        // this.shadowRoot.querySelector(".button").addEventListener("click", this.clickEventFunc);
-
-        
-        // this.inputUpdateFunc = (event) => {
-        //     const customEvent = new CustomEvent('input-update', {
-        //         bubbles: true,
-        //         composed: true,
-        //         detail: {value: event.target.value},
-        //     });
-        //     this.dispatchEvent(customEvent);
-        // }
-
-        // this.shadowRoot.querySelector(".input").addEventListener("change", this.inputUpdateFunc);
     }
 
-    customMethod() {
-        console.log("customMethod");
+    getSliderValue() {
+        return this.shadowRoot.querySelector('.slider').valueAsNumber;
+    }
+
+    setSliderValue(val) {
+        this.shadowRoot.querySelector('.slider').value = val;
+    }
+
+    triggerInput() {
+        this.shadowRoot.dispatchEvent(new Event('input'));
     }
 }
 
