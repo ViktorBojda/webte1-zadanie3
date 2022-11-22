@@ -17,6 +17,9 @@ class SliderCounter extends HTMLElement {
         let minimum = this.hasAttribute("min-val") ? this.getAttribute("min-val") : 1;
         let maximum = this.hasAttribute("max-val") ? this.getAttribute("max-val") : 10;
 
+        if (minimum >= maximum)
+            throw new RangeError('min-val must be smaller than max-val');
+
         slider.setAttribute("min", minimum);
         slider.setAttribute("max", maximum);
         slider.setAttribute("value", minimum);
